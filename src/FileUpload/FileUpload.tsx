@@ -12,7 +12,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   setIsLoading,
 }) => {
 
-  //filters out unneeded messages and builds array of sensorDta
+  //filters out unneeded messages and builds array of sensorData
   const buildSensorArray = (array: string[]) => {
     const sensorDataArray: SensorData[] = [];
 

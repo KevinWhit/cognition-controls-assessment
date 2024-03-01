@@ -14,11 +14,7 @@ const Graph: React.FC<TemperatureGraphProps> = ({ data }) => {
   const [minTime, setMinTime] = useState<number>();
   const [maxTime, setMaxTime] = useState<number>();
 
-  const getLineColor = () => {
-    return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
-      Math.random() * 256
-    )}, ${Math.floor(Math.random() * 256)})`;
-  };
+  const colorPallete = ['blue', 'green', 'yellow', 'black']
 
   const handleMaxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value);
@@ -36,15 +32,9 @@ const Graph: React.FC<TemperatureGraphProps> = ({ data }) => {
       setMinTime(Math.min(...tValues));
       setMaxTime(Math.max(...tValues));
     }
-  }, []);
+  }, [data]);
 
-  useEffect(() => {
-    if (chartInstanceRef.current) {
-      chartInstanceRef.current.destroy();
-    }
 
-    renderChart();
-  }, [data, maxTime, minTime]);
 
   const renderChart = () => {
     if (!chartRef.current || !data) return;
@@ -54,11 +44,11 @@ const Graph: React.FC<TemperatureGraphProps> = ({ data }) => {
 
     if (data.length > 0) {
       const properties = ["H", "T", "crh", "crl"];
-      properties.forEach((property) => {
+      properties.forEach((property, index) => {
         datasets.push({
           label: property,
           data: data.map((entry) => entry[property as keyof SensorData]),
-          borderColor: getLineColor(),
+          borderColor: colorPallete[index],
           fill: false,
         });
       });
@@ -87,6 +77,14 @@ const Graph: React.FC<TemperatureGraphProps> = ({ data }) => {
 
     chartInstanceRef.current = chartInstance;
   };
+
+  useEffect(() => {
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.destroy();
+    }
+
+    renderChart();
+  }, [data, maxTime, minTime, renderChart]);
 
   return (
     <Box>

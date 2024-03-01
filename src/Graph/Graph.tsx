@@ -34,7 +34,13 @@ const Graph: React.FC<TemperatureGraphProps> = ({ data }) => {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.destroy();
+    }
 
+    renderChart();
+  }, [data, maxTime, minTime]);
 
   const renderChart = () => {
     if (!chartRef.current || !data) return;
@@ -78,13 +84,7 @@ const Graph: React.FC<TemperatureGraphProps> = ({ data }) => {
     chartInstanceRef.current = chartInstance;
   };
 
-  useEffect(() => {
-    if (chartInstanceRef.current) {
-      chartInstanceRef.current.destroy();
-    }
 
-    renderChart();
-  }, [data, maxTime, minTime, renderChart]);
 
   return (
     <Box>

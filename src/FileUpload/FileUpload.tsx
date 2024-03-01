@@ -1,6 +1,6 @@
-import React, { useState, Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { SensorData } from "../Types/types";
-import { Box, Button, Input } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 interface FileUploadProps {
   onFileUpload: (sensorData: SensorData[]) => void;
